@@ -19,6 +19,10 @@ const server = http.createServer((req, res) => {
             routname = "Contact.html";
             res.statusCode = 200;
             break;
+        case "/contact-us":
+            res.statusCode = 301;
+            res.setHeader('Location', '/contact');
+            break;
         case "/about":
             routname = "About.html";
             res.statusCode = 200;
