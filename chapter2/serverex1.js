@@ -1,17 +1,24 @@
 const http = require('http');
+const fs = require('fs');
+const path = require('path');
 
 const server = http.createServer((req, res) => {
-    if (req) {
-        console.log("request is starting: " + req);
-    }
-
-    console.log("response is starting: " + res)
-
+    let filePath = path.join(__dirname, 'home.html');
+    // res.writeHead(200, { 'Content-Type': 'text/html' });
     res.setHeader('content-type', 'text/html');
-    res.write('<h1>server testing</h1>');
-    res.end();
-})
+    fs.readFile('./home.html', (err, data) => {
+        if (err) {
+            res.writeHead(500, { 'Content-Type': 'text/plain' });
+            res.end('Server Error');
+        } else {
+            console.log(filePath);
+            res.write(data);
+            res.end();
+        }
+    });
+});
 
-server.listen('9000', 'localhost', () => {
-    console.log('server is starting!')
-})
+const PORT = 9000;
+server.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
+});
