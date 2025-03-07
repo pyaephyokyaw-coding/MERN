@@ -6,7 +6,7 @@ const server = http.createServer((req, res) => {
 
     res.write('<h1> Hello PPK !</h1>');
 
-    res.end();
+    res.end(); 
 });
 
 server.listen('9974', 'localhost', () => {
