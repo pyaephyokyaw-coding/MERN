@@ -13,16 +13,21 @@ const server = http.createServer((req, res) => {
 
         case "/":
             routname = "home.html";
+            res.statusCode = 200;
             break;
         case "/contact":
             routname = "Contact.html";
+            res.statusCode = 200;
             break;
         case "/about":
             routname = "About.html";
+            res.statusCode = 200;
             break;
         default:
-            res.write(req.url);
+            // res.write(req.url);
             routname = "404.html";
+            res.statusCode = 404;
+            res.write(req.url);
             break;
 
     }
