@@ -1,6 +1,7 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
+const _ = require('lodash');
 
 const server = http.createServer((req, res) => {
     res.setHeader('content-type', 'text/html');

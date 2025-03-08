@@ -1,0 +1,28 @@
+{
+  "dependencies": {
+    "lodash": "^4.17.21"
+  },
+  "name": "nodejs-projects",
+  "version": "1.0.0",
+  "main": "server.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pyaephyokyaw-coding/Nodejs-course.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pyaephyokyaw-coding/Nodejs-course/issues"
+  },
+  "homepage": "https://github.com/pyaephyokyaw-coding/Nodejs-course#readme",
+  "description": ""
+}
