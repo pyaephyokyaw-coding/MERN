@@ -11,11 +11,13 @@
 <!-- <% const name = "Personal Website" %> -->
 
 <body align="center">
-    <nav>
+    <!-- <nav>
         <a href="/">Home</a>
         <a href="/contact">Contact</a>
         <a href="/about">About</a>
-    </nav>
+    </nav> -->
+
+    <%- include('./components/navbar.ejs') %>
 
     <% if(blogs.length) { %>
         <% blogs.forEach(element=> { %>
