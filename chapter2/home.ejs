@@ -1,16 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <h1>Home Page</h1>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
 </head>
+
+<!-- <% const name = "Personal Website" %> -->
+
 <body align="center">
     <nav>
         <a href="/">Home</a>
         <a href="/contact">Contact</a>
         <a href="/about">About</a>
     </nav>
+
+    <% if(blogs.length) { %>
+        <% blogs.forEach(element=> { %>
+            <h3>
+                <%= element.title %>
+            </h3>
+            <p>
+                <%= element.page %>
+            </p>
+            <% }); %>
+                <% } else { %>
+                    <h3>No blogs found</h3>
+                    <% } %>
+
+
 </body>
+
 </html>

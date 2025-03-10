@@ -12,7 +12,19 @@ app.listen(port, () => {
 
 app.get('/', (req, res) => {
     // res.sendFile('./chapter2/home.html', {root : __dirname})
-    res.render('home');
+
+    let blogs = [
+        {title: 'title1', page: 'Ch-3-Ep-5-ep-16-ejs-view-engine Ch-3-Ep-6-ep-17-ejs-pass-data-and-render-dynamic-contents'},
+        {title: 'title2', page: 'page2'},
+        {title: 'title3', page: 'page3'}
+    ]
+
+    res.render('home', {
+        // name: 'Personal Website',
+        // type: 'website'
+
+        blogs
+    });
 })
 
 app.get('/contact', (req, res) => {
