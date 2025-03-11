@@ -11,6 +11,11 @@ app.listen(port, () => {
     console.log(`App running at http://localhost:${port}`);
 })
 
+app.use((req, res, next) => {
+    console.log('Middleware is running!');
+    next();
+});
+
 app.get('/', (req, res) => {
     // res.sendFile('./chapter2/home.html', {root : __dirname})
 
