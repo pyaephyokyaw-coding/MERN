@@ -1,6 +1,7 @@
 const port = 9000;
 const express = require('express');
 const { times } = require('lodash');
+let morgan = require('morgan');
 const app = express();
 
 app.set('views', './chapter2');
@@ -11,10 +12,22 @@ app.listen(port, () => {
     console.log(`App running at http://localhost:${port}`);
 })
 
-app.use((req, res, next) => {
-    console.log('Middleware is running!');
-    next();
-});
+// app.use((req, res, next) => {
+//     console.log('Middleware is running!');
+//     next();
+// });
+
+// let logger = (content) => {
+//     return (req, res, next) => {
+//         if (content == 'dev'){
+//             console.log(`${req.method} ${req.originalUrl} --`);
+//         }
+//         next();
+//     }
+// }
+
+// app.use(logger('dev'));
+app.use(morgan('dev'))
 
 app.get('/', (req, res) => {
     // res.sendFile('./chapter2/home.html', {root : __dirname})
