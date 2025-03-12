@@ -28,6 +28,7 @@ app.listen(port, () => {
 
 // app.use(logger('dev'));
 app.use(morgan('dev'))
+app.use(express.static('public'))
 
 app.get('/', (req, res) => {
     // res.sendFile('./chapter2/home.html', {root : __dirname})
