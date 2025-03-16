@@ -3,6 +3,7 @@ const express = require('express');
 const { times } = require('lodash');
 let morgan = require('morgan');
 const app = express();
+let mongoDBUrl = 'mongodb+srv://pyaephyokyawdev:Kk74&kl99@onfkeevan.wc5gy.mongodb.net/?retryWrites=true&w=majority&appName=ONFKEEVAN';
 
 app.set('views', './chapter2');
 app.set('view engine', 'ejs');
