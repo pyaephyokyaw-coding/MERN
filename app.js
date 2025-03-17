@@ -42,31 +42,42 @@ app.use(express.static('public'))
 
 app.get('/blog-create', async(req, res) =>{
     let createBlog = new blog({
-        title: 'new blog title 2',
-        intro: 'new blog intro 2',
-        body: 'new blog body 2'
+        title: 'new blog title 3',
+        intro: 'new blog intro 3',
+        body: 'new blog body 3'
     })
 
     await createBlog.save();
     res.send('Blog added!')
 })
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
     // res.sendFile('./chapter2/home.html', {root : __dirname})
 
-    let blogs = [
-        { title: 'title1', page: 'Ch-3-Ep-5-ep-16-ejs-view-engine Ch-3-Ep-6-ep-17-ejs-pass-data-and-render-dynamic-contents' },
-        { title: 'title2', page: 'page2' },
-        { title: 'title3', page: 'page3' }
-    ]
+    // let blogs = [
+    //     { title: 'title1', page: 'Ch-3-Ep-5-ep-16-ejs-view-engine Ch-3-Ep-6-ep-17-ejs-pass-data-and-render-dynamic-contents' },
+    //     { title: 'title2', page: 'page2' },
+    //     { title: 'title3', page: 'page3' }
+    // ]
 
-    res.render('home', {
-        // name: 'Personal Website',
-        // type: 'website'
+    // let blogs = await blog.find().sort({createdAt: -1});
+    let blogs;
+try {
+    blogs = await blog.findById('67d77afe953c901ece3d2a7c');
+    res.json(blogs)
+} catch (err) {
+    console.error(err);
+//     // return res.status(500).send('Error retrieving blog');
+}
 
-        blogs,
-        title: 'Home'
-    });
+
+    // res.render('home', {
+    //     // name: 'Personal Website',
+    //     // type: 'website'
+
+    //     blogs,
+    //     title: 'Home'
+    // });
 })
 
 app.get('/contact', (req, res) => {
