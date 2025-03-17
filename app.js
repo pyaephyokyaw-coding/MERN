@@ -5,6 +5,7 @@ let morgan = require('morgan');
 const app = express();
 let mongoDBUrl = 'mongodb+srv://pyaephyokyawdev:Kk74&kl99@onfkeevan.wc5gy.mongodb.net/?retryWrites=true&w=majority&appName=ONFKEEVAN';
 const mongoose = require('mongoose');
+const blog = require('./Modals/Blog');
 
 mongoose.connect(mongoDBUrl).then(() => {
     console.log('Connected to db');
@@ -38,6 +39,17 @@ app.set('view engine', 'ejs');
 // app.use(logger('dev'));
 app.use(morgan('dev'))
 app.use(express.static('public'))
+
+app.get('/blog-create', async(req, res) =>{
+    let createBlog = new blog({
+        title: 'new blog title 2',
+        intro: 'new blog intro 2',
+        body: 'new blog body 2'
+    })
+
+    await createBlog.save();
+    res.send('Blog added!')
+})
 
 app.get('/', (req, res) => {
     // res.sendFile('./chapter2/home.html', {root : __dirname})
