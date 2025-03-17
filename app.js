@@ -4,14 +4,22 @@ const { times } = require('lodash');
 let morgan = require('morgan');
 const app = express();
 let mongoDBUrl = 'mongodb+srv://pyaephyokyawdev:Kk74&kl99@onfkeevan.wc5gy.mongodb.net/?retryWrites=true&w=majority&appName=ONFKEEVAN';
+const mongoose = require('mongoose');
+
+mongoose.connect(mongoDBUrl).then(() => {
+    console.log('Connected to db');
+    app.listen(port, () => {
+        console.log(`App running at http://localhost:${port}`);
+    })
+}).catch(e => {
+    console.log(`Exception error occur: ${e}`);
+});
+
+
 
 app.set('views', './chapter2');
 app.set('view engine', 'ejs');
 
-
-app.listen(port, () => {
-    console.log(`App running at http://localhost:${port}`);
-})
 
 // app.use((req, res, next) => {
 //     console.log('Middleware is running!');
