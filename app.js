@@ -3,9 +3,12 @@ const express = require('express');
 const { times } = require('lodash');
 let morgan = require('morgan');
 const app = express();
-let mongoDBUrl = 'mongodb+srv://pyaephyokyawdev:Kk74&kl99@onfkeevan.wc5gy.mongodb.net/?retryWrites=true&w=majority&appName=ONFKEEVAN';
 const mongoose = require('mongoose');
 const blog = require('./Modals/Blog');
+const expresslayout = require('express-ejs-layouts')
+
+let mongoDBUrl = 'mongodb+srv://pyaephyokyawdev:Kk74&kl99@onfkeevan.wc5gy.mongodb.net/?retryWrites=true&w=majority&appName=ONFKEEVAN';
+
 
 mongoose.connect(mongoDBUrl).then(() => {
     console.log('Connected to db');
@@ -20,6 +23,8 @@ mongoose.connect(mongoDBUrl).then(() => {
 
 app.set('views', './chapter2');
 app.set('view engine', 'ejs');
+app.use(expresslayout);
+app.set('layout', 'layouts/default');
 
 
 // app.use((req, res, next) => {
@@ -40,7 +45,7 @@ app.set('view engine', 'ejs');
 app.use(morgan('dev'))
 app.use(express.static('public'))
 
-app.get('/blog-create', async(req, res) =>{
+app.get('/blog-create', async (req, res) => {
     let createBlog = new blog({
         title: 'new blog title 3',
         intro: 'new blog intro 3',
@@ -51,33 +56,48 @@ app.get('/blog-create', async(req, res) =>{
     res.send('Blog added!')
 })
 
+// app.get('/', async (req, res) => {
+//     // res.sendFile('./chapter2/home.html', {root : __dirname})
+
+//     // let blogs = [
+//     //     { title: 'title1', page: 'Ch-3-Ep-5-ep-16-ejs-view-engine Ch-3-Ep-6-ep-17-ejs-pass-data-and-render-dynamic-contents' },
+//     //     { title: 'title2', page: 'page2' },
+//     //     { title: 'title3', page: 'page3' }
+//     // ]
+
+//     // let blogs = await blog.find().sort({createdAt: -1});
+//     let blogs;
+// try {
+//     blogs = await blog.findById('67d77afe953c901ece3d2a7c');
+//     res.json(blogs)
+// } catch (err) {
+//     console.error(err);
+// //     // return res.status(500).send('Error retrieving blog');
+// }
+
+
+//     // res.render('home', {
+//     //     // name: 'Personal Website',
+//     //     // type: 'website'
+
+//     //     blogs,
+//     //     title: 'Home'
+//     // });
+// })
+
+
 app.get('/', async (req, res) => {
-    // res.sendFile('./chapter2/home.html', {root : __dirname})
 
-    // let blogs = [
-    //     { title: 'title1', page: 'Ch-3-Ep-5-ep-16-ejs-view-engine Ch-3-Ep-6-ep-17-ejs-pass-data-and-render-dynamic-contents' },
-    //     { title: 'title2', page: 'page2' },
-    //     { title: 'title3', page: 'page3' }
-    // ]
+    let blogs = [
+        { title: 'title1', page: 'Ch-3-Ep-5-ep-16-ejs-view-engine Ch-3-Ep-6-ep-17-ejs-pass-data-and-render-dynamic-contents' },
+        { title: 'title2', page: 'page2' },
+        { title: 'title3', page: 'page3' }
+    ]
 
-    // let blogs = await blog.find().sort({createdAt: -1});
-    let blogs;
-try {
-    blogs = await blog.findById('67d77afe953c901ece3d2a7c');
-    res.json(blogs)
-} catch (err) {
-    console.error(err);
-//     // return res.status(500).send('Error retrieving blog');
-}
-
-
-    // res.render('home', {
-    //     // name: 'Personal Website',
-    //     // type: 'website'
-
-    //     blogs,
-    //     title: 'Home'
-    // });
+    res.render('home', {
+        blogs,
+        title: 'Home'
+    });
 })
 
 app.get('/contact', (req, res) => {
@@ -92,6 +112,12 @@ app.get('/about', (req, res) => {
     // res.sendFile('./chapter2/About.html', {root : __dirname})
     res.render('about', {
         title: 'About'
+    })
+})
+
+app.get('/blogcreate', (req, res) => {
+    res.render('blog/create', {
+        title: 'Blog Create'
     })
 })
 

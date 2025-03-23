@@ -1,40 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<%- include('./components/head.ejs') %>
-    <!-- <head>
-    <h1>Home Page</h1>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
-</head> -->
-
-    <!-- <% const name = "Personal Website" %> -->
-
-    <body>
-        <!-- <nav>
-        <a href="/">Home</a>
-        <a href="/contact">Contact</a>
-        <a href="/about">About</a>
-    </nav> -->
-        <%- include('./components/navbar.ejs') %>
-            <div class="container">
-                <% if(blogs.length) { %>
-                    <% blogs.forEach(element=> { %>
-                        <div class="blog-card">
-                            <h1>
-                                <%= element.title %>
-                            </h1>
-                            <p>
-                                <%= element.page %>
-                            </p>
-                            <% }); %>
-                                <% } else { %>
-                                    <h1>No blogs found</h1>
-                        </div>
-                        <% } %>
-            </div>
-
-    </body>
-
-</html>
+<h1>Home page</h1>
+<% if(blogs.length) { %>
+    <% blogs.forEach(element=> { %>
+        <div class="blog-card">
+            <h1>
+                <%= element.title %>
+            </h1>
+            <p>
+                <%= element.page %>
+            </p>
+            <% }); %>
+                <% } else { %>
+                    <h1>No blogs found</h1>
+        </div>
+        <% } %>
