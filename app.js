@@ -4,7 +4,7 @@ const { times } = require('lodash');
 let morgan = require('morgan');
 const app = express();
 const mongoose = require('mongoose');
-const blog = require('./Modals/Blog');
+const Blog = require('./Modals/Blog');
 const expresslayout = require('express-ejs-layouts')
 
 let mongoDBUrl = 'mongodb+srv://pyaephyokyawdev:Kk74&kl99@onfkeevan.wc5gy.mongodb.net/?retryWrites=true&w=majority&appName=ONFKEEVAN';
@@ -20,7 +20,7 @@ mongoose.connect(mongoDBUrl).then(() => {
 });
 
 
-
+app.use(express.urlencoded({extended: true}))
 app.set('views', './chapter2');
 app.set('view engine', 'ejs');
 app.use(expresslayout);
@@ -45,15 +45,18 @@ app.set('layout', 'layouts/default');
 app.use(morgan('dev'))
 app.use(express.static('public'))
 
-app.get('/blog-create', async (req, res) => {
-    let createBlog = new blog({
-        title: 'new blog title 3',
-        intro: 'new blog intro 3',
-        body: 'new blog body 3'
+app.post('/blog-create', async (req, res) => {
+
+    let {title, intro, body} = req.body;
+
+    let createBlog = new Blog({
+        title,
+        intro,
+        body
     })
 
     await createBlog.save();
-    res.send('Blog added!')
+    res.send('Blog added successfully!')
 })
 
 // app.get('/', async (req, res) => {
@@ -115,10 +118,22 @@ app.get('/about', (req, res) => {
     })
 })
 
-app.get('/blogcreate', (req, res) => {
+app.get('/create', (req, res) => {
     res.render('blog/create', {
         title: 'Blog Create'
     })
+})
+
+app.post('/blogs', async (req, res) => {
+    let{title,intro,body} = req.body;
+
+    let blog = new Blog({
+        title,
+        intro,
+        body
+    })
+
+    blog.save();
 })
 
 app.get('/about-us', (req, res) => {

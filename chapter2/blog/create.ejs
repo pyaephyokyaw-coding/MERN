@@ -1,18 +1,18 @@
 <h1>Blog create</h1>
-<form action="submit">
+<form action="/blog-create" method="post">
     <div class="form-group">
         <label for="">Title</label>
-        <input type="text">
+        <input name="title" type="text">
     </div>
     <div class="form-group">
         <label for="">Intro</label>
-        <input type="text">
+        <input name="intro" type="text">
     </div>
     <div class="form-group">
         <label for="">body</label>
-        <textarea name="" id="" rows="" cols=""></textarea>
+        <textarea name="body" id="" rows="" cols=""></textarea>
     </div>
     <div class="form-group">
-        <button name="submit" class="create-btn">Create</button>
+        <button type="submit" class="create-btn">Create</button>
     </div>
 </form>
