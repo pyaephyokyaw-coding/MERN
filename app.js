@@ -56,7 +56,10 @@ app.post('/blog-create', async (req, res) => {
     })
 
     await createBlog.save();
-    res.send('Blog added successfully!')
+
+    // Redirect to home with a success message
+    res.redirect('/?success=Blog added successfully!');
+
 })
 
 // app.get('/', async (req, res) => {
@@ -91,11 +94,13 @@ app.post('/blog-create', async (req, res) => {
 
 app.get('/', async (req, res) => {
 
-    let blogs = [
-        { title: 'title1', page: 'Ch-3-Ep-5-ep-16-ejs-view-engine Ch-3-Ep-6-ep-17-ejs-pass-data-and-render-dynamic-contents' },
-        { title: 'title2', page: 'page2' },
-        { title: 'title3', page: 'page3' }
-    ]
+    // let blogs = [
+    //     { title: 'title1', page: 'Ch-3-Ep-5-ep-16-ejs-view-engine Ch-3-Ep-6-ep-17-ejs-pass-data-and-render-dynamic-contents' },
+    //     { title: 'title2', page: 'page2' },
+    //     { title: 'title3', page: 'page3' }
+    // ]
+
+    let blogs = await Blog.find().sort({createdAt: -1});
 
     res.render('home', {
         blogs,
@@ -143,6 +148,29 @@ app.get('/about-us', (req, res) => {
     })
 })
 
+app.get('/single-blog', (req, res) => {
+
+    let blog = Blog.findById('67d77a942bf84aebc5204144')
+
+    res.render('blog/show', {
+        blog,
+        title: 'Blog detail'
+    })
+})
+
+app.get('/blog/:id', async(req, res) => {
+    let id = req.params.id;
+
+    let blog = await Blog.findById(id);
+
+    // res.json(blogs)
+
+    res.render('blog/show', {
+        blog,
+        title: 'single blog detail'
+    })
+})
+
 app.use((req, res) => {
     res.statusCode = 404;
     // res.sendFile('./chapter2/404.html', {root : __dirname})
@@ -150,3 +178,8 @@ app.use((req, res) => {
         title: '404'
     })
 })
+
+
+
+
+
