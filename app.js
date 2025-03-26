@@ -5,7 +5,8 @@ let morgan = require('morgan');
 const app = express();
 const mongoose = require('mongoose');
 const Blog = require('./Modals/Blog');
-const expresslayout = require('express-ejs-layouts')
+const expresslayout = require('express-ejs-layouts');
+const blogRoute = require('./routes/blogRoute');
 
 let mongoDBUrl = 'mongodb+srv://pyaephyokyawdev:Kk74&kl99@onfkeevan.wc5gy.mongodb.net/?retryWrites=true&w=majority&appName=ONFKEEVAN';
 
@@ -26,6 +27,8 @@ app.set('view engine', 'ejs');
 app.use(expresslayout);
 app.set('layout', 'layouts/default');
 
+app.use(morgan('dev'))
+app.use(express.static('public'))
 
 // app.use((req, res, next) => {
 //     console.log('Middleware is running!');
@@ -42,25 +45,6 @@ app.set('layout', 'layouts/default');
 // }
 
 // app.use(logger('dev'));
-app.use(morgan('dev'))
-app.use(express.static('public'))
-
-app.post('/blog-create', async (req, res) => {
-
-    let { title, intro, body } = req.body;
-
-    let createBlog = new Blog({
-        title,
-        intro,
-        body
-    })
-
-    await createBlog.save();
-
-    // Redirect to home with a success message
-    res.redirect('/?success=Blog added successfully!');
-
-})
 
 // app.get('/', async (req, res) => {
 //     // res.sendFile('./chapter2/home.html', {root : __dirname})
@@ -91,44 +75,6 @@ app.post('/blog-create', async (req, res) => {
 //     // });
 // })
 
-
-app.get('/', async (req, res) => {
-
-    // let blogs = [
-    //     { title: 'title1', page: 'Ch-3-Ep-5-ep-16-ejs-view-engine Ch-3-Ep-6-ep-17-ejs-pass-data-and-render-dynamic-contents' },
-    //     { title: 'title2', page: 'page2' },
-    //     { title: 'title3', page: 'page3' }
-    // ]
-
-    let blogs = await Blog.find().sort({ createdAt: -1 });
-
-    res.render('home', {
-        blogs,
-        title: 'Home'
-    });
-})
-
-app.get('/contact', (req, res) => {
-    // res.sendFile('./chapter2/contact.html', {root : __dirname})
-    res.render('contact', {
-        title: 'Contact'
-    }
-    );
-})
-
-app.get('/about', (req, res) => {
-    // res.sendFile('./chapter2/About.html', {root : __dirname})
-    res.render('about', {
-        title: 'About'
-    })
-})
-
-app.get('/create', (req, res) => {
-    res.render('blog/create', {
-        title: 'Blog Create'
-    })
-})
-
 app.post('/blogs', async (req, res) => {
     let { title, intro, body } = req.body;
 
@@ -139,13 +85,6 @@ app.post('/blogs', async (req, res) => {
     })
 
     blog.save();
-})
-
-app.get('/about-us', (req, res) => {
-    // res.redirect('/about')
-    res.render('about', {
-        title: 'About-us'
-    })
 })
 
 app.get('/single-blog', (req, res) => {
@@ -177,24 +116,29 @@ app.get('/blog/:id', async (req, res, next) => {
     }
 })
 
-app.post('/blog/:id/delete', async (req, res, next) => {
-    let id = req.params.id;
+app.use(blogRoute);
 
-    try {
-        let blog = await Blog.findById(id);
+app.get('/about-us', (req, res) => {
+    // res.redirect('/about')
+    res.render('about', {
+        title: 'About-us'
+    })
+})
 
-        if (!blog) {
-            return res.redirect('/?error=Blog not found.');
-        }
-
-        await Blog.findByIdAndDelete(id);
-
-        res.redirect('/?success=Blog-title:[' + blog.title + '] Successfully deleted.');
-    } catch (e) {
-        res.redirect('/?error=Internal server error: ' + e);
-        next(e);
+app.get('/contact', (req, res) => {
+    // res.sendFile('./chapter2/contact.html', {root : __dirname})
+    res.render('contact', {
+        title: 'Contact'
     }
-});
+    );
+})
+
+app.get('/about', (req, res) => {
+    // res.sendFile('./chapter2/About.html', {root : __dirname})
+    res.render('about', {
+        title: 'About'
+    })
+})
 
 app.use((req, res) => {
     res.statusCode = 404;
@@ -203,8 +147,3 @@ app.use((req, res) => {
         title: '404'
     })
 })
-
-
-
-
-

@@ -3,7 +3,7 @@
     <% blogs.forEach(element=> { %>
         <div class="blog-card">
 
-            <a href="/blog/<%= element._id %>">
+            <a href="/blog-single/<%= element._id %>">
                 <h2>
                     <%= element.title %>
                 </h2>
@@ -14,11 +14,11 @@
             </p>
 
             <div class="blog-container">
-                <form action="/blog/<%= element._id %>/edit" method="post">
+                <form action="/blog-edit/<%= element._id %>" method="post">
                     <button class="edit-btn" type="submit">Edit</button>
                 </form>
     
-                <form action="/blog/<%= element._id %>/delete" method="post">
+                <form action="/blog-delete/<%= element._id %>" method="post">
                     <button class="delete-btn" type="submit">Delete</button>
                 </form>
             </div>
