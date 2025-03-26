@@ -20,7 +20,7 @@ mongoose.connect(mongoDBUrl).then(() => {
 });
 
 
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended: true }))
 app.set('views', './chapter2');
 app.set('view engine', 'ejs');
 app.use(expresslayout);
@@ -47,7 +47,7 @@ app.use(express.static('public'))
 
 app.post('/blog-create', async (req, res) => {
 
-    let {title, intro, body} = req.body;
+    let { title, intro, body } = req.body;
 
     let createBlog = new Blog({
         title,
@@ -100,7 +100,7 @@ app.get('/', async (req, res) => {
     //     { title: 'title3', page: 'page3' }
     // ]
 
-    let blogs = await Blog.find().sort({createdAt: -1});
+    let blogs = await Blog.find().sort({ createdAt: -1 });
 
     res.render('home', {
         blogs,
@@ -130,7 +130,7 @@ app.get('/create', (req, res) => {
 })
 
 app.post('/blogs', async (req, res) => {
-    let{title,intro,body} = req.body;
+    let { title, intro, body } = req.body;
 
     let blog = new Blog({
         title,
@@ -158,24 +158,43 @@ app.get('/single-blog', (req, res) => {
     })
 })
 
-app.get('/blog/:id', async(req, res, next) => {
+app.get('/blog/:id', async (req, res, next) => {
     let id = req.params.id;
 
-    try{
+    try {
         let blog = await Blog.findById(id);
 
-    // res.json(blogs)
+        // res.json(blogs)
 
-    res.render('blog/show', {
-        blog,
-        title: 'single blog detail'
-    })
+        res.render('blog/show', {
+            blog,
+            title: 'single blog detail'
+        })
     }
-    catch(e){
+    catch (e) {
         res.redirect('/?error=Internal server error: !' + e);
         next();
     }
 })
+
+app.post('/blog/:id/delete', async (req, res, next) => {
+    let id = req.params.id;
+
+    try {
+        let blog = await Blog.findById(id);
+
+        if (!blog) {
+            return res.redirect('/?error=Blog not found.');
+        }
+
+        await Blog.findByIdAndDelete(id);
+
+        res.redirect('/?success=Blog-title:[' + blog.title + '] Successfully deleted.');
+    } catch (e) {
+        res.redirect('/?error=Internal server error: ' + e);
+        next(e);
+    }
+});
 
 app.use((req, res) => {
     res.statusCode = 404;

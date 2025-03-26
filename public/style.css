@@ -67,3 +67,12 @@ nav h1 a {
 .blog-card:hover {
     transform: scale(1.02);
 }
+
+.blog-container {
+    display: flex;
+    width: 100%; /* Ensures full container width */
+}
+
+.blog-container form {
+    flex-grow: 1; /* Ensures equal width for both buttons */
+}

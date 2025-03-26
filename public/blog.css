@@ -1,10 +1,10 @@
 
 form {
-    margin: 30px;
+    /* margin: 30px; */
     background: #fff;
-    padding: 20px 10px 20px 10px;
+    padding: 10px;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
 }
 
 .form-group {
@@ -44,4 +44,32 @@ textarea {
 
 .create-btn:hover {
     background-color: #0056b3;
+}
+
+.delete-btn {
+    background-color: #9d0018;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 30%;
+}
+
+.delete-btn:hover{
+    background-color: #ff0026;
+}
+
+.edit-btn {
+    background-color: #9d7b00;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 30%;
+}
+
+.edit-btn:hover{
+    background-color: #ffc800;
 }

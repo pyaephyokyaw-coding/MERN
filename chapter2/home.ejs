@@ -1,27 +1,64 @@
 <h1>Home Page</h1>
 <% if (blogs.length) { %>
-    <% blogs.forEach(element => { %>
+    <% blogs.forEach(element=> { %>
         <div class="blog-card">
+
             <a href="/blog/<%= element._id %>">
-                <h2><%= element.title %></h2>
+                <h2>
+                    <%= element.title %>
+                </h2>
             </a>
-            <p><%= element.page %></p>
+
+            <p>
+                <%= element.intro %>
+            </p>
+
+            <div class="blog-container">
+                <form action="/blog/<%= element._id %>/edit" method="post">
+                    <button class="edit-btn" type="submit">Edit</button>
+                </form>
+    
+                <form action="/blog/<%= element._id %>/delete" method="post">
+                    <button class="delete-btn" type="submit">Delete</button>
+                </form>
+            </div>
         </div>
-    <% }); %>
-<% } else { %>
-    <h1>No blogs found</h1>
-<% } %>
+        <% }); %>
+            <% } else { %>
+                <h1>No blogs found</h1>
+                <% } %>
+
+                    <script>
+                        // Extract the success message from the URL
+                        const urlParams = new URLSearchParams(window.location.search);
+                        const successMessage = urlParams.get('success');
+                        if (successMessage) {
+                            alert(successMessage);
+                        }
+
+                        const errorMessage = urlParams.get('error');
+                        if (errorMessage) {
+                            alert(errorMessage)
+                        }
+                    </script>
+
+<!-- <div id="messageBox" class="message-container">
+    Hover to see message
+    <div class="tooltip" id="tooltipText"></div>
+</div>
 
 <script>
-    // Extract the success message from the URL
+    // Extract the success or error message from the URL
     const urlParams = new URLSearchParams(window.location.search);
     const successMessage = urlParams.get('success');
-    if (successMessage) {
-        alert(successMessage);
-    }
-
     const errorMessage = urlParams.get('error');
-    if(errorMessage){
-        alert(errorMessage)
+
+    let message = successMessage || errorMessage;
+    let tooltipText = document.getElementById("tooltipText");
+
+    if (message) {
+        tooltipText.textContent = message;
+    } else {
+        tooltipText.style.display = "none"; // Hide if no message
     }
-</script>
+</script> -->
