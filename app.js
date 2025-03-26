@@ -158,10 +158,11 @@ app.get('/single-blog', (req, res) => {
     })
 })
 
-app.get('/blog/:id', async(req, res) => {
+app.get('/blog/:id', async(req, res, next) => {
     let id = req.params.id;
 
-    let blog = await Blog.findById(id);
+    try{
+        let blog = await Blog.findById(id);
 
     // res.json(blogs)
 
@@ -169,6 +170,11 @@ app.get('/blog/:id', async(req, res) => {
         blog,
         title: 'single blog detail'
     })
+    }
+    catch(e){
+        res.redirect('/?error=Internal server error: !' + e);
+        next();
+    }
 })
 
 app.use((req, res) => {
