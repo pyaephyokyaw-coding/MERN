@@ -24,20 +24,27 @@ router.get('/create', (req, res) => {
     })
 })
 
-router.post('/blog-create', async (req, res) => {
+router.post('/blog-create/:id?', async (req, res) => {
+    try {
+        let id = req.params.id;
+        let { title, intro, body } = req.body;
 
-    let { title, intro, body } = req.body;
+        console.log('Log : ' + id)
 
-    let createBlog = new Blog({
-        title,
-        intro,
-        body
-    })
-
-    await createBlog.save();
-
-    res.redirect('/blog?success=Blog added successfully!');
-})
+        if (id.toString() !== '0') {
+            // Update existing blog
+            await Blog.findByIdAndUpdate(id, { title, intro, body });
+            res.redirect('/blog?success=Blog updated successfully!');
+        } else {
+            // Create new blog
+            await new Blog({ title, intro, body }).save();
+            res.redirect('/blog?success=Blog added successfully!');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        res.redirect('/blog?error=Something went wrong!');
+    }
+});
 
 router.get('/blog-single/:id', async (req, res, next) => {
     let id = req.params.id;
@@ -66,12 +73,14 @@ router.post('/blog-edit/:id', async (req, res, next) => {
             return res.redirect('/blog?error=Blog not found.');
         }
 
-        await Blog.findByIdAndDelete(id);
+        res.render('blog/create', {
+            blog,
+            title: 'Blog Create'
+        })
 
-        res.redirect('/blog?success=Blog-title:[' + blog.title + '] Successfully deleted.');
     } catch (e) {
         res.redirect('/blog?error=Internal server error: ' + e);
-        next(e);
+        next();
     }
 });
 
